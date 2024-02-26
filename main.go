@@ -5,15 +5,15 @@ import (
 	"log"
 	"net/http"
 
+	gw "github.com/OyePuru/grpc-proto/gen/go/client/proto/helloworld"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/grpclog"
-
-	gw "github.com/amanjain-cb/helloworld/gen/go/proto/helloworld"
 )
 
 func main() {
+
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
