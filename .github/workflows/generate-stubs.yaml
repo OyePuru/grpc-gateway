@@ -32,13 +32,10 @@ jobs:
         go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
         go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
-    - name: Generate stubs
+    - name: Install protoc-gen-grpc-gateway
       run: |
-        make generate-stubs
-        - name: Install protoc-gen-grpc-gateway
-        run: |
-          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
-  
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+
     - name: Remove Existing Generations
       run: |
         rm -rf gen
