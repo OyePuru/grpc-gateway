@@ -1,4 +1,4 @@
-REPO_URL := https://github.com/OyePuru/http-server
+REPO_URL := https://github.com/OyePuru/grpc-gateway
 BRANCH := main
 PROTO_FOLDER := proto
 GEN_FOLDER := gen
