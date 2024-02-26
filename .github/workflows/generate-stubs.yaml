@@ -9,6 +9,9 @@ jobs:
   generate-stubs:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -36,13 +39,8 @@ jobs:
       run: |
         go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
 
-    - name: Remove Existing Generations
-      run: |
-        rm -rf gen
-        mkdir gen
-        mkdir gen/go
-
     - name: Generate stubs
       run: |
         make generate-stubs
-        git diff --quiet || git commit -am "Update generated stubs" && git push
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
