@@ -1,0 +1,17 @@
+name: Generate Stubs
+
+on:
+  push:
+    paths:
+      - 'proto/**'
+
+jobs:
+  generate-stubs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Generate stubs
+      run: make generate-stubs
