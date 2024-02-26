@@ -1,29 +1,44 @@
-REPO_URL := https://github.com/OyePuru/http-server
-BRANCH := main
-PROTO_FOLDER := proto
-GEN_FOLDER := gen
-SERVICE_YAML := service.yaml
+name: Generate Stubs
 
-clean:
-	rm -rf proto gen 
+on:
+  push:
+    paths:
+      - 'proto/**'
+  pull_request:
+    paths:
+      - 'proto/**'
 
-pull-views:
-	git clone --branch $(BRANCH) --single-branch --depth 1 $(REPO_URL) tmp-repo
-	cp -r tmp-repo/$(PROTO_FOLDER) .
-	cp -r tmp-repo/$(GEN_FOLDER) .
-	rm -rf tmp-repo
+jobs:
+  generate-stubs:
+    runs-on: ubuntu-latest
 
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-generate-stubs:
-	rm -rf gen
-	mkdir gen
-	mkdir gen/go
-	protoc -I . \
-  --go_out ./gen/go/ \
-  --go_opt paths=source_relative \
-  --go-grpc_out ./gen/go/ \
-  --go-grpc_opt paths=source_relative \
-  --grpc-gateway_out ./gen/go \
-  --grpc-gateway_opt paths=source_relative \
-  --grpc-gateway_opt grpc_api_configuration=service.yaml \
-  ./proto/**/*.proto
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.17'
+
+    - name: Install protoc
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y protobuf-compiler
+
+    - name: Install protoc-gen-go
+      run: |
+        go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+
+    - name: Install protoc-gen-go-grpc
+      run: |
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+
+    - name: Install protoc-gen-grpc-gateway
+      run: |
+        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+
+    - name: Generate stubs
+      run: |
+        make generate-stubs
+        git diff --quiet || git commit -am "Update generated stubs" && git push
