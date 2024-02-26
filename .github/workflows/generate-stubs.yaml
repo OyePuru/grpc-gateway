@@ -4,9 +4,6 @@ on:
   push:
     paths:
       - 'proto/**'
-  pull_request:
-    paths:
-      - 'proto/**'
 
 jobs:
   generate-stubs:
@@ -19,7 +16,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: '1.17'
+        go-version: '1.22.0'
 
     - name: Install protoc
       run: |
@@ -28,16 +25,20 @@ jobs:
 
     - name: Install protoc-gen-go
       run: |
-        go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+        go install google.golang.org/protobuf/cmd/protoc-gen-go
 
     - name: Install protoc-gen-go-grpc
       run: |
-        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+        go get google.golang.org/grpc/cmd/protoc-gen-go-grpc
+        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
-    - name: Install protoc-gen-grpc-gateway
+    - name: Generate stubs
       run: |
-        go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
-
+        make generate-stubs
+        - name: Install protoc-gen-grpc-gateway
+        run: |
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+  
     - name: Remove Existing Generations
       run: |
         rm -rf gen
