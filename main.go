@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	gw "github.com/OyePuru/grpc-proto/gen/go/client/proto/grpcproto"
+	gw "github.com/OyePuru/grpc-proto/gen/go/proto/grpcproto"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -14,11 +14,11 @@ import (
 
 // RegisterGrpcServiceHandlers registers gRPC service handlers.
 func RegisterGrpcServiceHandlers(ctx context.Context, mux *runtime.ServeMux, grpcServerEndPoint string, opts []grpc.DialOption) {
-	if err := gw.RegisterGreeterHandlerFromEndpoint(ctx, mux, grpcServerEndPoint, opts); err != nil {
+	if err := gw.RegisterExampleGetServiceHandlerFromEndpoint(ctx, mux, grpcServerEndPoint, opts); err != nil {
 		log.Fatalln("Failed to Register:", err)
 	}
 
-	if err := gw.RegisterGreeter2HandlerFromEndpoint(ctx, mux, grpcServerEndPoint, opts); err != nil {
+	if err := gw.RegisterExamplePostServiceHandlerFromEndpoint(ctx, mux, grpcServerEndPoint, opts); err != nil {
 		log.Fatalln("Failed to Register:", err)
 	}
 }
