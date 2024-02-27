@@ -3,12 +3,12 @@ module github.com/amanjain-cb/grpc-proto
 go 1.22.0
 
 require (
+	github.com/OyePuru/grpc-proto v0.0.0-20240227100559-e896c26a8718
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1
 	google.golang.org/grpc v1.62.0
 )
 
 require (
-	github.com/OyePuru/grpc-proto v0.0.0-20240227100559-e896c26a8718 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	golang.org/x/net v0.20.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
