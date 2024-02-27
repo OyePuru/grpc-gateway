@@ -5,29 +5,42 @@ import (
 	"log"
 	"net/http"
 
-	gw "github.com/OyePuru/grpc-proto/gen/go/client/proto/helloworld"
+	gw "github.com/OyePuru/grpc-proto/gen/go/client/proto/grpcproto"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/grpclog"
 )
 
-func main() {
+// RegisterGrpcServiceHandlers registers gRPC service handlers.
+func RegisterGrpcServiceHandlers(ctx context.Context, mux *runtime.ServeMux, grpcServerEndPoint string, opts []grpc.DialOption) {
+	if err := gw.RegisterGreeterHandlerFromEndpoint(ctx, mux, grpcServerEndPoint, opts); err != nil {
+		log.Fatalln("Failed to Register:", err)
+	}
 
+	if err := gw.RegisterGreeter2HandlerFromEndpoint(ctx, mux, grpcServerEndPoint, opts); err != nil {
+		log.Fatalln("Failed to Register:", err)
+	}
+}
+
+func main() {
+	// Create a background context.
 	ctx := context.Background()
+	// Create a context with cancel function to gracefully shutdown the server.
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
+	// Create a new ServeMux.
 	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	grpcServerEndpoint := "localhost:9000"
-	if err := gw.RegisterGreeterHandlerFromEndpoint(ctx, mux, grpcServerEndpoint, opts); err != nil {
-		log.Fatalln("Failed to Register:", err)
-	}
 
-	if err := gw.RegisterGreeter2HandlerFromEndpoint(ctx, mux, grpcServerEndpoint, opts); err != nil {
-		log.Fatalln("Failed to Register:", err)
-	}
+	// Define gRPC server endpoint we can replace this with env later to handle multiple endpoints.
+	grpcServerEndpoint := "localhost:9000"
+
+	// Set gRPC dial options with insecure credentials.
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+
+	// Register gRPC service handlers to the ServeMux.
+	RegisterGrpcServiceHandlers(ctx, mux, grpcServerEndpoint, opts)
 
 	log.Println("Server is up and running on localhost:9001")
 	if err := http.ListenAndServe(":9001", mux); err != nil {
