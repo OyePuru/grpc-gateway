@@ -2,6 +2,8 @@ github.com/OyePuru/grpc-proto v0.0.0-20240226151816-41ad8e8a84c5 h1:5q51Wv9zr5pu
 github.com/OyePuru/grpc-proto v0.0.0-20240226151816-41ad8e8a84c5/go.mod h1:BR8O9ry9H5fKEr0qr8p+xgFknY3gPhehRHwonbXUl2s=
 github.com/OyePuru/grpc-proto v0.0.0-20240227065718-3788705ca688 h1:7YHWDjDDv8uz8AWafJSERXH6vHVya6EaUGBZnjwbrD4=
 github.com/OyePuru/grpc-proto v0.0.0-20240227065718-3788705ca688/go.mod h1:BR8O9ry9H5fKEr0qr8p+xgFknY3gPhehRHwonbXUl2s=
+github.com/OyePuru/grpc-proto v0.0.0-20240227070444-9812b4182514 h1:IvDZ7fhPhFNLRAu9OgsVtaBho0KXPeNOyuy6kDrvIlQ=
+github.com/OyePuru/grpc-proto v0.0.0-20240227070444-9812b4182514/go.mod h1:BR8O9ry9H5fKEr0qr8p+xgFknY3gPhehRHwonbXUl2s=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
 github.com/golang/protobuf v1.5.3 h1:KhyjKVUg7Usr/dYsdSqoFveMYd5ko72D+zANwlG1mmg=
 github.com/golang/protobuf v1.5.3/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=
